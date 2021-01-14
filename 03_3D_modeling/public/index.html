@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div>
+    <h2>Make 3D modeling</h2>
+    <input type="button" id="boxbutton" value="3D box" onclick="makeBox();">
+    <input type="button" id="cylinderbutton" value="3D cylinder" onclick="makeCylinder();">
+  </div>
+  <script>
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTM2NjhhNS02MDg1LTQyMjItYTI0OC1lMWI1YmIzYjU4ZTYiLCJpZCI6NDE2MDksImlhdCI6MTYxMDM3MjA3Nn0.KpP62b3-7960-y1jdNkjxiEs-faaFV1O5MLQjkY9SN8';
+
+  // var extent = Cesium.Rectangle.fromDegrees(117.896284, 31.499028, 139.597380, 43.311528);
+
+  const viewer = new Cesium.Viewer('cesiumContainer', {
+    terrainProvider: Cesium.createworldIdTerrain()
+    // timeline: false,
+    // animation: false,
+    // selectionIndicator: false,
+    // navigationHelpButton: false,
+    // infoBox: false,
+    // navigationInstructionsInitiallyVisible: false,
+
+    // imageryProvider: Cesium.createOpenStreetMapImageryProvider({ url : 'https://a.tile.openstreetmap.org/'}),
+    // baseLayerPicker: true
+  });
+  </script>
+</body>
+</html>
