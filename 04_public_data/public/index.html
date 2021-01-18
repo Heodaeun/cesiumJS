@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- D3.js -->
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head><script src="https://d3js.org/d3.v6.min.js"></script>ner"></div>
+
+  <script>
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTM2NjhhNS02MDg1LTQyMjItYTI0OC1lMWI1YmIzYjU4ZTYiLCJpZCI6NDE2MDksImlhdCI6MTYxMDM3MjA3Nn0.KpP62b3-7960-y1jdNkjxiEs-faaFV1O5MLQjkY9SN8';
+
+  // 처음 생성시 카메라가 볼 기본 사각형 (서 west, 남 south, 동 east, 북 north)
+  var extent = Cesium.Rectangle.fromDegrees(117.896284, 31.499028, 139.597380, 43.311528);
+  Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
+  // 0: 대상 전체, >0: 대상에서 멀리, <0: 대상에 더 가까이 이동
+  Cesium.Camera.DEFAULT_VIEW_FACTOR = 0.7;
+
+  const viewer = new Cesium.Viewer('cesiumContainer', {
+    terrainProvider: Cesium.createWorldTerrain(),
+
+    // 부가 기능들 숨기기
+    timeline: false,
+    animation: false,
+    selectionIndicator: false,
+    navigationHelpButton: false,
+    infoBox: false,
+    navigationInstructionsInitiallyVisible: false
+  });
+
+  // Make buildingTileset
+  // const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());   
+
+    // read csv file
+    d3.csv('../data.csv',
+      function(error, data){ myProcess(error, data); }
+    );
+
+    function myProcess(error, data){
+      console.log(data);
+    }
+
+  </script>
+</body>
+</html>
