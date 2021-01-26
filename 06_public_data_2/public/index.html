@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- import jquery -->
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <!-- socket.io -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+
+  <script>
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTM2NjhhNS02MDg1LTQyMjItYTI0OC1lMWI1YmIzYjU4ZTYiLCJpZCI6NDE2MDksImlhdCI6MTYxMDM3MjA3Nn0.KpP62b3-7960-y1jdNkjxiEs-faaFV1O5MLQjkY9SN8';
+
+    // 처음 생성시 카메라가 볼 기본 사각형 (서 west, 남 south, 동 east, 북 north)
+    var extent = Cesium.Rectangle.fromDegrees(117.896284, 31.499028, 139.597380, 43.311528);  // korea
+    Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
+    // 0: 대상 전체, >0: 대상에서 멀리, <0: 대상에 더 가까이 이동
+    Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      shadows: true,
+      terrainProvider: Cesium.createWorldTerrain()
+    });
+    // Make buildingTileset
+    const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());  
+
+
+
+    var socket = io();
+
+    socket.on('init', (fp_data, pos_data) => {
+      fp_data = JSON.parse(fp_data);
+      pos_data = JSON.parse(pos_data);
+
+      const start = Cesium.JulianDate.fromIso8601("2020-12-01T00:00:00Z");
+      const stop = Cesium.JulianDate.fromIso8601("2021-01-01T00:00:00Z");
+      viewer.clock.startTime = start.clone();
+      viewer.clock.stopTime = stop.clone();
+      viewer.clock.currentTime = start.clone();
+      viewer.timeline.zoomTo(start,stop);
+
+      // The SampledPositionedProperty stores the position and timestamp for each sample along the radar sample series.
+      const positionProperty = new Cesium.SampledPositionProperty();
+
+        // (1) read floating_population data
+        // for(var i=0; i<fp_data.length; i++){
+        for(var i=0; i<500; i++){
+          const dataPoint = fp_data[i];
+          const date = dataPoint.date.toString();
+          const year = date.slice(0,4);
+          const month = date.slice(4,6);
+          const day = date.slice(6,8);
+          const time = dataPoint.time;
+          const gu = dataPoint.gu;
+          const fp = dataPoint.fp;
+          const d =  year + '-' + month + '-' + day + 'T' + time + ':00:00Z';
+
+          var lng, lat, j=0;
+
+          while(gu != pos_data.DATA[j].sig_kor_nm){ j++ }
+          lng = pos_data.DATA[j].lng;
+          lat = pos_data.DATA[j].lat;
+
+          console.log('d: ',d);
+
+          const t = Cesium.JulianDate.fromIso8601(d);
+          console.log('t: ',t)
+          const position = Cesium.Cartesian3.fromDegrees(lng, lat, 0.03);
+          positionProperty.addSample(t, position);
+
+          viewer.entities.add({
+            description: `(${year}/${month}/${day} ${time}:00) 서울시 ${gu}: ${fp}명`,
+            position: position,
+            cylinder: {
+              length: fp,
+              topRadius: 200.0,
+              bottomRadius: 200.0,
+              material: Cesium.Color.RED,
+            },
+          });
+        }
+          
+          // var properties = tileset.properties;
+          // if (
+          //   Cesium.defined(properties) &&
+          //   Cesium.defined(properties.Height)
+          // ) {
+          //   tileset.style = new Cesium.Cesium3DTileStyle({
+          //     color: {
+          //       conditions: [
+          //         ["${Height} >= 83", "color('purple', 0.5)"],
+          //         ["${Height} >= 80", "color('red')"],
+          //         ["${Height} >= 70", "color('orange')"],
+          //         ["${Height} >= 12", "color('yellow')"],
+          //         ["${Height} >= 7", "color('lime')"],
+          //         ["${Height} >= 1", "color('cyan')"],
+          //         ["true", "color('blue')"],
+          //       ],
+          //     },
+          //   });
+          // }
+
+        
+        viewer.zoomTo(viewer.entities);
+    });
+
+</script>
+</body>
+</html>
