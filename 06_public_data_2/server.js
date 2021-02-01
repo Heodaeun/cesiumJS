@@ -18,11 +18,10 @@ app.use(express.static('public'));
 
 // Read csv file
 var Filedata = fs.readFileSync('Floating_population.json', 'utf-8');
-var position = fs.readFileSync('position.json', 'utf-8');
 
 io.on('connection', (socket)=> {
     console.log('connected');
 
-    io.emit('init', Filedata, position);
+    io.emit('init', Filedata);
 
 });

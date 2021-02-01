@@ -17,6 +17,381 @@
   <script>
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTM2NjhhNS02MDg1LTQyMjItYTI0OC1lMWI1YmIzYjU4ZTYiLCJpZCI6NDE2MDksImlhdCI6MTYxMDM3MjA3Nn0.KpP62b3-7960-y1jdNkjxiEs-faaFV1O5MLQjkY9SN8';
 
+    const startTime = Cesium.JulianDate.fromIso8601("2020-12-01T00:00:00Z");
+    const stopTime = Cesium.JulianDate.fromIso8601("2021-01-01T00:00:00Z");
+
+    var czml = [
+      {
+        id: "document",
+        name: "CZML Properties",
+        version: "1.0",
+        clock: {
+          interval: startTime/stopTime,
+          currentTime: startTime,
+          multiplier: 3600,
+          startTime: startTime,
+          stopTime: stopTime,
+        },
+      },
+      {
+        id: "Dobong-gu",
+        name: "Dobong-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0317674,37.6658609,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Eunpyeong-gu",
+        name: "Eunpyeong-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9227004,37.6176125,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Dongdaemun-gu",
+        name: "Dongdaemun-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0507003,37.5838012,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Dongjak-gu",
+        name: "Dongjak-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9443073,37.4965037,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Geumcheon-gu",
+        name: "Geumcheon-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9001546,37.4600969,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Guro-gu",
+        name: "Guro-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.858121,37.4954856,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Jongno-gu",
+        name: "Jongno-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9861493,37.5990998,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Gangbuk-gu",
+        name: "Gangbuk-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0147158,37.6469954,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Jungnang-gu",
+        name: "Jungnang-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0939669,37.5953795,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Gangnam-gu",
+        name: "Gangnam-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0664091,37.4959854,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Gangseo-gu",
+        name: "Gangseo-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.8226561,37.5657617,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Jung-gu",
+        name: "Jung-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9941904,37.5579452,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Gangdong-gu",
+        name: "Gangdong-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.1464824,37.5492077,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Gwangjin-gu",
+        name: "Gwangjin-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0857528,37.5481445,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Mapo-gu",
+        name: "Mapo-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9087803,37.5622906,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Seocho-gu",
+        name: "Seocho-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0378103,37.4769528,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Seongbuk-gu",
+        name: "Seongbuk-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0232185,37.606991,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Nowon-gu",
+        name: "Nowon-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0771201,37.655264,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Songpa-gu",
+        name: "Songpa-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.1144822,37.5048534,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Seodaemun-gu",
+        name: "Seodaemun-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9356665,37.5820369,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Yangcheon-gu",
+        name: "Yangcheon-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.8561534,37.5270616,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Yeongdeungpo-gu",
+        name: "Yeongdeungpo-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9139242,37.520641,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Gwanak-gu",
+        name: "Gwanak-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9438071,37.4653993,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Seongdong-gu",
+        name: "Seongdong-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(127.0409622,37.5506753,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+      {
+        id: "Yongsan-gu",
+        name: "Yongsan-gu",
+        properties: {
+          population: []
+        },
+        position: Cesium.Cartesian3.fromDegrees(126.9810742,37.5311008,0),
+        cylinder: {
+          length: 0,
+          topRadius: 200.0,
+          bottomRadius: 200.0,
+          material: Cesium.Color.RED,
+        }
+      },
+    ];
+
+
+
+
+
+
+
+
     // 처음 생성시 카메라가 볼 기본 사각형 (서 west, 남 south, 동 east, 북 north)
     var extent = Cesium.Rectangle.fromDegrees(117.896284, 31.499028, 139.597380, 43.311528);  // korea
     Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
@@ -25,89 +400,132 @@
 
     const viewer = new Cesium.Viewer('cesiumContainer', {
       shadows: true,
-      terrainProvider: Cesium.createWorldTerrain()
+      shouldAnimate: true,
+      // terrainProvider: Cesium.createWorldTerrain()
     });
-    // Make buildingTileset
-    const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());  
 
+    // Make buildingTileset
+    // const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());  
+
+    var dataSource = new Cesium.CzmlDataSource();
+    dataSource.load(czml);
+    viewer.dataSources.add(dataSource);
+    viewer.zoomTo(dataSource);
+
+
+    function scaleProperty(property, scalingFactor){
+      return new Cesium.CallbackProperty(function (time, result) {
+        result = property.getValue(time, result);
+        result = result * scalingFactor;
+        return result;
+      }, property.isConstant);
+    }
+
+    function setLength(gu){
+      var GuObject = dataSource.entities.getById(gu);
+      var property = GuObject.properties["population"];
+      property.cylinder.length = scaleProperty(property, 1 / 2);
+    }
 
 
     var socket = io();
 
-    socket.on('init', (fp_data, pos_data) => {
+    socket.on('init', (fp_data) => {
       fp_data = JSON.parse(fp_data);
-      pos_data = JSON.parse(pos_data);
 
-      const start = Cesium.JulianDate.fromIso8601("2020-12-01T00:00:00Z");
-      const stop = Cesium.JulianDate.fromIso8601("2021-01-01T00:00:00Z");
-      viewer.clock.startTime = start.clone();
-      viewer.clock.stopTime = stop.clone();
-      viewer.clock.currentTime = start.clone();
-      viewer.timeline.zoomTo(start,stop);
+
+      for(var i=0; i<fp_data.length; i++){
+        const dataPoint = fp_data[i];
+        const date = dataPoint.date.toString();
+
+        const year = date.slice(0,4);
+        const month = date.slice(4,6);
+        const day = date.slice(6,8);
+        const time = dataPoint.time;
+        const d =  year + '-' + month + '-' + day + 'T' + time + ':00:00Z';
+
+        const gu = dataPoint.gu;
+        const fp = dataPoint.fp;
+
+        var GuObject = dataSource.entities.getById(gu);
+        var property = GuObject.properties["population"];
+        property.add(d);
+        property.add(fp);
+      }
+      console.log(czml);
+
+      const g = ["Dobong-gu","Eunpyeong-gu","Dongdaemun-gu","Dongjak-gu","Geumcheon-gu",
+      "Guro-gu","Jongno-gu","Gangbuk-gu","Jungnang-gu","Gangnam-gu",
+      "Gangseo-gu","Jung-gu","Gangdong-gu","Gwangjin-gu","Mapo-gu", 
+      "Seocho-gu","Seongbuk-gu","Nowon-gu","Songpa-gu","Seodaemun-gu",
+      "Yangcheon-gu","Yeongdeungpo-gu","Gwanak-gu","Seongdong-gu","Yongsan-gu"];
+
+      for(var i=0; i<25; i++){
+        setLength(g[i]);
+      }
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // viewer.clock.startTime = start.clone();
+      // viewer.clock.stopTime = stop.clone();
+      // viewer.clock.currentTime = start.clone();
+      // viewer.timeline.zoomTo(start,stop);
 
       // The SampledPositionedProperty stores the position and timestamp for each sample along the radar sample series.
       const positionProperty = new Cesium.SampledPositionProperty();
 
-        // (1) read floating_population data
-        // for(var i=0; i<fp_data.length; i++){
-        for(var i=0; i<100; i++){
-          const dataPoint = fp_data[i];
-          const date = dataPoint.date.toString();
-          const year = date.slice(0,4);
-          const month = date.slice(4,6);
-          const day = date.slice(6,8);
-          const time = dataPoint.time;
-          const gu = dataPoint.gu;
-          const fp = dataPoint.fp;
-          const d =  year + '-' + month + '-' + day + 'T' + time + ':00:00Z';
+      // (1) read floating_population data
+      // for(var i=0; i<fp_data.length; i++){
+      for(var i=0; i<100; i++){
+        const dataPoint = fp_data[i];
+        const date = dataPoint.date.toString();
+        const year = date.slice(0,4);
+        const month = date.slice(4,6);
+        const day = date.slice(6,8);
+        const time = dataPoint.time;
+        const gu = dataPoint.gu;
+        const fp = dataPoint.fp;
+        const d =  year + '-' + month + '-' + day + 'T' + time + ':00:00Z';
 
-          var lng, lat, j=0;
+        var lng, lat, j=0;
 
-          while(gu != pos_data.DATA[j].sig_kor_nm){ j++ }
-          lng = pos_data.DATA[j].lng;
-          lat = pos_data.DATA[j].lat;
+        while(gu != pos_data.DATA[j].sig_kor_nm){ j++ }
+        lng = pos_data.DATA[j].lng;
+        lat = pos_data.DATA[j].lat;
 
-          console.log('d: ',d);
+        console.log('d: ',d);
 
-          const t = Cesium.JulianDate.fromIso8601(d);
-          console.log('t: ',t)
-          const position = Cesium.Cartesian3.fromDegrees(lng, lat, 0.03);
-          positionProperty.addSample(t, position);
+        const t = Cesium.JulianDate.fromIso8601(d);
+        console.log('t: ',t)
+        const position = Cesium.Cartesian3.fromDegrees(lng, lat, 0.03);
+        positionProperty.addSample(t, position);
 
-          viewer.entities.add({
-            description: `(${year}/${month}/${day} ${time}:00) 서울시 ${gu}: ${fp}명`,
-            position: position,
-            cylinder: {
-              length: (fp/2),
-              topRadius: 200.0,
-              bottomRadius: 200.0,
-              material: Cesium.Color.RED,
-            },
-          });
-        }
-          
-          // var properties = tileset.properties;
-          // if (
-          //   Cesium.defined(properties) &&
-          //   Cesium.defined(properties.Height)
-          // ) {
-          //   tileset.style = new Cesium.Cesium3DTileStyle({
-          //     color: {
-          //       conditions: [
-          //         ["${Height} >= 83", "color('purple', 0.5)"],
-          //         ["${Height} >= 80", "color('red')"],
-          //         ["${Height} >= 70", "color('orange')"],
-          //         ["${Height} >= 12", "color('yellow')"],
-          //         ["${Height} >= 7", "color('lime')"],
-          //         ["${Height} >= 1", "color('cyan')"],
-          //         ["true", "color('blue')"],
-          //       ],
-          //     },
-          //   });
-          // }
-
-        
-        viewer.zoomTo(viewer.entities);
+        viewer.entities.add({
+          description: `(${year}/${month}/${day} ${time}:00) 서울시 ${gu}: ${fp}명`,
+          position: position,
+          cylinder: {
+            length: (fp/2),
+            topRadius: 200.0,
+            bottomRadius: 200.0,
+            material: Cesium.Color.RED,
+          },
+        });
+      }
+      
+      viewer.zoomTo(viewer.entities);
     });
 
 </script>
