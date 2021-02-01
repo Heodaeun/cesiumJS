@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTM2NjhhNS02MDg1LTQyMjItYTI0OC1lMWI1YmIzYjU4ZTYiLCJpZCI6NDE2MDksImlhdCI6MTYxMDM3MjA3Nn0.KpP62b3-7960-y1jdNkjxiEs-faaFV1O5MLQjkY9SN8';
+    
+    var czml = [
+      {
+        id: "document",
+        name: "CZML Custom Properties",
+        version: "1.0",
+        clock: {
+          interval: "1970/2010",
+          currentTime: "1970",
+          multiplier: 500000000,
+        },
+      },
+      {
+        id: "custom_property_object",
+        name: "An object with custom properties",
+        properties: {
+          // constant_property: true,
+          // population_intervals: [
+          //   {
+          //     interval: "1970/1980",
+          //     number: 2209600,
+          //   },
+          //   {
+          //     interval: "1980/2090",
+          //     number: 2889700,
+          //   },
+          //   {
+          //     interval: "1990/2000",
+          //     number: 3307600,
+          //   },
+          //   {
+          //     interval: "2000/2010",
+          //     number: 4326900,
+          //   },
+          // ],
+          population_sampled: {
+            number: [
+              "1970",
+              2209600,
+              "1980",
+              2889700,
+              "1990",
+              3307600,
+              "2000",
+              4326900,
+              "2010",
+              5049100,
+            ],
+          },
+        },
+      },
+      {
+        id: "colorado",
+        name: "name",
+        polygon: {
+          positions: {
+            cartographicDegrees: [
+              -109.03,
+              41,
+              0,
+              -102.03,
+              41,
+              0,
+              -102.03,
+              37,
+              0,
+              -109.03,
+              37,
+              0,
+            ],
+          },
+          material: {
+            solidColor: {
+              color: {
+                rgba: [0, 255, 0, 150],
+              },
+            },
+          },
+          height: 0,
+          extrudedHeight: 0,
+        },
+      },
+    ];
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      shouldAnimate: true,
+    });
+
+    var dataSource = new Cesium.CzmlDataSource();
+
+    function scaleProperty(property, scalingFactor) {
+      // returns a property that scales another property by a constant factor.
+      return new Cesium.CallbackProperty(function (time, result) {
+        result = property.getValue(time, result);
+        result = result * scalingFactor;
+        return result;
+      }, property.isConstant);
+      
+      var cesiumWidget = new Cesium.CesiumWidget('cesiumContainer');
+    }
+
+    function setExtrudedHeight(propertyName) {
+      var customPropertyObject = dataSource.entities.getById("custom_property_object");
+      var property = customPropertyObject.properties[propertyName];
+      var colorado = dataSource.entities.getById("colorado");
+
+      // Because the population values are so large, we scale them down
+      // by 50 so they fit on the screen.
+      // If we didn't need to scale, we could directly assign the property
+      // to extrudedHeight.
+      // colorado.polygon.extrudedHeight = scaleProperty(property, 1 / 50.0);
+      colorado.polygon.extrudedHeight = scaleProperty(property, 1 / 50.0);
+      
+      console.log(colorado.polygon.extrudedHeight);
+    }
+
+    dataSource.load(czml);
+    viewer.dataSources.add(dataSource);
+    viewer.zoomTo(dataSource); 
+
+    // setExtrudedHeight("population_intervals");
+    setExtrudedHeight("population_sampled");
+  </script>
+ </div>
+</body>
+</html>

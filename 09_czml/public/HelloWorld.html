@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World!</title>
+      <!-- Include the CesiumJS JavaScript and CSS files -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.77/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  </head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+
+    var czml = [
+            {
+        id: "document",
+        // name: "CZML Custom Properties",
+        version: "1.0",
+        clock: {
+          interval: "1970/2010",
+          currentTime: "1970",
+          multiplier: 500000000,
+        },
+      },
+        {
+            "id": "MyTestData",
+            "polygon": {
+                "material": {
+                    "solidColor": {
+                        "color": {
+                            "rgba": [255,165,0,255]
+                        }
+                    }
+                }
+            },
+            "vertexPositions": {
+                "cartographicDegrees": [
+                    -80.3982608081762,
+                    40.7897431538943,
+                    0,
+                    -50.3906446069755,
+                    40.7897431538943,
+                    0,
+                    -80.3906446069755,
+                    10.7821269526935,
+                    0,
+                    -80.3982608081762,
+                    20.7821269526935,
+                    0,
+                    -60.3982608081762,
+                    30.7897431538943,
+                    0
+                ]
+            }
+        }
+    ];
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      shouldAnimate: true,
+    });
+
+    // var cesiumWidget = new Cesium.CesiumWidget('cesiumContainer');
+    
+    var czmlSource = new Cesium.CzmlDataSource();
+    czmlSource.load(czml);
+
+    viewer.dataSources.add(czmlSource);
+    viewer.zoomTo(czmlSource); 
+
+    // var dataSourceDisplay = new Cesium.DataSourceDisplay(cesiumWidget.scene);
+    // dataSourceDisplay.getDataSources().add(czmlSource);
+    // dataSourceDisplay.update(cesiumWidget.clock.currentTime);
+  </script>
+</body>
+</html>

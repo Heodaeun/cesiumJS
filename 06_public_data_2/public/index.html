@@ -50,7 +50,7 @@
 
         // (1) read floating_population data
         // for(var i=0; i<fp_data.length; i++){
-        for(var i=0; i<500; i++){
+        for(var i=0; i<100; i++){
           const dataPoint = fp_data[i];
           const date = dataPoint.date.toString();
           const year = date.slice(0,4);
@@ -78,7 +78,7 @@
             description: `(${year}/${month}/${day} ${time}:00) 서울시 ${gu}: ${fp}명`,
             position: position,
             cylinder: {
-              length: fp,
+              length: (fp/2),
               topRadius: 200.0,
               bottomRadius: 200.0,
               material: Cesium.Color.RED,
