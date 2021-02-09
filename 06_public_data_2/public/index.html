@@ -17,7 +17,7 @@
   <script>
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTM2NjhhNS02MDg1LTQyMjItYTI0OC1lMWI1YmIzYjU4ZTYiLCJpZCI6NDE2MDksImlhdCI6MTYxMDM3MjA3Nn0.KpP62b3-7960-y1jdNkjxiEs-faaFV1O5MLQjkY9SN8';
 
-    const g = ["Dobong-gu","Eunpyeong-gu","Dongdaemun-gu","Dongjak-gu","Geumcheon-gu",
+    const list_gu = ["Dobong-gu","Eunpyeong-gu","Dongdaemun-gu","Dongjak-gu","Geumcheon-gu",
       "Guro-gu","Jongno-gu","Gangbuk-gu","Jungnang-gu","Gangnam-gu",
       "Gangseo-gu","Jung-gu","Gangdong-gu","Gwangjin-gu","Mapo-gu", 
       "Seocho-gu","Seongbuk-gu","Nowon-gu","Songpa-gu","Seodaemun-gu",
@@ -32,7 +32,7 @@
 
     const viewer = new Cesium.Viewer('cesiumContainer', {
       shouldAnimate: true,
-      // terrainProvider: Cesium.createWorldTerrain()
+      terrainProvider: Cesium.createWorldTerrain()
     });
 
     // Make buildingTileset
@@ -49,23 +49,29 @@
       }, property.isConstant);
     }
 
-    function setLength(gu){
+    function setLength(gu, factor){
       var GuObject = dataSource.entities.getById(gu);
       var property = GuObject.properties["population"];
 
-      GuObject.cylinder.length = scaleProperty(property, 1/3);
+      GuObject.cylinder.length = scaleProperty(property, factor);
+      // GuObject.name = `${gu} : `;
     }
 
-    var socket = io();
 
-    socket.on('init', (czml) => {
+    function loadDataSource(czml, factor){
       dataSource.load(czml);
       viewer.dataSources.add(dataSource);
       viewer.zoomTo(dataSource);
 
       for(var i=0; i<25; i++){
-        setLength(g[i]);
+        setLength(list_gu[i], factor);
       }
+    }
+
+    var socket = io();
+
+    socket.on('init', (czml, max, min) => {
+      loadDataSource(czml, 5*min/max);
     });
 </script>
 </body>

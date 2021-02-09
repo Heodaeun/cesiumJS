@@ -635,8 +635,13 @@ var czml = [
   
 // Read csv file
 var fp_data = JSON.parse(fs.readFileSync('Floating_population.json', 'utf-8'));
+var min = fp_data[0].fp;
+var max = fp_data[0].fp;
 
 for(var i=0; i<fp_data.length; i++){
+  if(fp_data[i].fp > max) { max = fp_data[i].fp; }
+  if(fp_data[i].fp < min) { min = fp_data[i].fp; }
+
   const dataPoint = fp_data[i];
   const date = dataPoint.date.toString();
 
@@ -661,5 +666,6 @@ for(var i=0; i<fp_data.length; i++){
 
 io.on('connection', (socket)=> {
   console.log('connected');
-  io.emit('init', czml);  
+  console.log('max: ',max,", min: ", min);
+  io.emit('init', czml, max, min);  
 });
