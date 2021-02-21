@@ -18,11 +18,19 @@ app.use(express.static('public'));
 
 // Read csv file
 var Filedata = fs.readFileSync('number_data.csv', 'utf-8');
+
 var a = '[';
 lines = Filedata.split('\n');
 for(var i=0; i<lines.length; i++){
     line = lines[i];    // 한 줄
-    a += '[' + line.slice(0, -1) + '],';
+
+    var j = 0;
+    while(line[j] !== ','){ j++; }
+
+    var longtitude = line.slice(0, j);
+    var latitude = line.slice(j+1, -1);
+    a += '{"lng": ' + longtitude + ', "lat": ' + latitude + '}';
+    if(i != lines.length - 1) { a += ','; }
 }
 a += ']';
 fs.writeFileSync('converted.json', (a));
@@ -30,10 +38,7 @@ fs.writeFileSync('converted.json', (a));
 
 io.on('connection', (socket)=> {
     console.log('connected');
-
-    // io.emit('init', Filedata);
     io.emit('init', a);
-
 });
 
 

@@ -18,14 +18,12 @@
     var socket = io();
 
     socket.on('init', (data) => {
-
       Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTM2NjhhNS02MDg1LTQyMjItYTI0OC1lMWI1YmIzYjU4ZTYiLCJpZCI6NDE2MDksImlhdCI6MTYxMDM3MjA3Nn0.KpP62b3-7960-y1jdNkjxiEs-faaFV1O5MLQjkY9SN8';
 
       // 처음 생성시 카메라가 볼 기본 사각형 (서 west, 남 south, 동 east, 북 north)
       var extent = Cesium.Rectangle.fromDegrees(117.896284, 31.499028, 139.597380, 43.311528);
       Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
-      // 0: 대상 전체, >0: 대상에서 멀리, <0: 대상에 더 가까이 이동
-      Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+      Cesium.Camera.DEFAULT_VIEW_FACTOR = -0.1;
 
       const viewer = new Cesium.Viewer('cesiumContainer', {
         terrainProvider: Cesium.createWorldTerrain(),
@@ -41,23 +39,12 @@
 
       // Make buildingTileset
       // const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());  
+    
+      var Filedata = JSON.parse(data);
 
-      // (1) - Filedata
-      lines = data.split('\n');
-
-      for(var i=0; i<lines.length; i++){
-        line = lines[i];
-
-        var j = 0;
-        while(line[j] !== ','){
-          j++;
-        }
-        var longtitude = line.slice(0, j);
-        var latitude = line.slice(j+1, -1);
-        console.log('long: ',longtitude, ', lat: ',latitude);
-
+      for(var i=0; i<Filedata.length; i++){
         var redEllipse = viewer.entities.add({
-          position: Cesium.Cartesian3.fromDegrees(longtitude, latitude),
+          position: Cesium.Cartesian3.fromDegrees(Filedata[i].lng, Filedata[i].lat),
           name: "Red ellipse on surface",
           ellipse: {
             semiMinorAxis: 1000.0,
@@ -66,18 +53,8 @@
           },
         });
       }
+      console.log('finish');
     });
-
-
-    // (2) - a
-    // data = JSON.parse(a);
-    // data = JSON.parse(data);
-
-  //   for(var i=0; i<data.length; i++){
-  //     console.log('long: ', data[i][0], ', lat: ', data[i][1]);
-  //   }
-  // });
-
 </script>
 </body>
 </html>
